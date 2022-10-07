@@ -124,23 +124,23 @@ def crawl_favorite_podcasts():
 
         age_hours = check_date(release_date)
 
-        if age_hours <= 168:
+        if age_hours <= INTERVAL_HOURS:
             new_podcasts[beautiful_name] = episode
 
     # Send email update if there's new episodes
     if len(new_podcasts.keys()) > 0:
 
-        content = 'There\'s new episodes for your favorite podcasts!<br><br>'
+        content = 'There\'s new episodes of your favorite podcasts!<br><br>'
         for k,v in new_podcasts.items():
             content += f'<strong>{k}</strong><br>{v}<br><br>'
 
         print(f'Sending email...')
-        send_mail(mail_subject = 'There\'s new episodes for your favorite podcasts!', mail_content = content)
+        send_mail(mail_subject = 'There\'s new episodes of your favorite podcasts!', mail_content = content)
 
 @click.command()
 @click.option('--action', default = None, help = 'Optional action to delete or add a podcast to the list (delete, add or None)')
 @click.option('--title', default = None, help = 'Title of the podcast to delete/add')
-@click.option('--id', default = None, help = 'ID of the podcast to add (only necessary for add action)')
+@click.option('--id', default = None, help = 'ID of the podcast to add (only necessary with add action)')
 def take_action(action, title, id):
 
     # if there's no call to add/delete action -> crawl podcasts
